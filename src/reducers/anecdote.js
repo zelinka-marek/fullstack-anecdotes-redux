@@ -23,8 +23,22 @@ const INITIAL_STATE = anecdotesAtStart.map(toAnecdote);
 
 export function anecdoteReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case "VOTE": {
+      const { id } = action.payload;
+
+      const anecdote = state.find((anecdote) => anecdote.id === id);
+      const updatedAnecdote = { ...anecdote, votes: anecdote.votes + 1 };
+
+      return state.map((anecdote) =>
+        anecdote.id === id ? updatedAnecdote : anecdote
+      );
+    }
     default: {
       return state;
     }
   }
+}
+
+export function voteFor(id) {
+  return { type: "VOTE", payload: { id } };
 }
