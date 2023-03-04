@@ -3,7 +3,11 @@ import { addVote, createAnecdote } from "./reducers/anecdote";
 
 export function App() {
   const dispatch = useDispatch();
-  const anecdotes = useSelector((state) => state);
+  const anecdotes = useSelector((state) => {
+    const byVotes = (a, b) => b.votes - a.votes;
+
+    return state.sort(byVotes);
+  });
 
   const vote = (id) => {
     dispatch(addVote(id));
