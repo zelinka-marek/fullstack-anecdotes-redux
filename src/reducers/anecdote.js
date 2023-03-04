@@ -23,7 +23,7 @@ const INITIAL_STATE = anecdotesAtStart.map(toAnecdote);
 
 export function anecdoteReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case "VOTE": {
+    case "ADD_VOTE": {
       const { id } = action.payload;
 
       const anecdote = state.find((anecdote) => anecdote.id === id);
@@ -33,12 +33,23 @@ export function anecdoteReducer(state = INITIAL_STATE, action) {
         anecdote.id === id ? updatedAnecdote : anecdote
       );
     }
+    case "ADD_ANECDOTE": {
+      const { content } = action.payload;
+
+      const anecdote = toAnecdote(content);
+
+      return state.concat(anecdote);
+    }
     default: {
       return state;
     }
   }
 }
 
-export function voteFor(id) {
-  return { type: "VOTE", payload: { id } };
+export function addVote(id) {
+  return { type: "ADD_VOTE", payload: { id } };
+}
+
+export function createAnecdote(content) {
+  return { type: "ADD_ANECDOTE", payload: { content } };
 }
