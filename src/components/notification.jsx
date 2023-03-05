@@ -1,8 +1,4 @@
-import { useSelector } from "react-redux";
-
-export function Notification() {
-  const notification = useSelector(({ notification }) => notification);
-
+export function Notification(props) {
   return (
     <div
       role="alert"
@@ -13,7 +9,7 @@ export function Notification() {
         borderWidth: 1,
       }}
     >
-      {notification}
+      {props.message}
     </div>
   );
 }

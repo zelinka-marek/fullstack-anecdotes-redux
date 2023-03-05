@@ -5,9 +5,12 @@ import { Filter } from "./components/filter";
 import { Notification } from "./components/notification";
 import { addAnecdote } from "./reducers/anecdotes";
 import { setFilter } from "./reducers/filter";
+import { setNotification } from "./reducers/notification";
 
 export function App() {
   const dispatch = useDispatch();
+  const notification = useSelector(({ notification }) => notification);
+
   const anecdotes = useSelector(({ anecdotes, filter }) => {
     const sortedAnecdotes = [...anecdotes].sort((a, b) => b.votes - a.votes);
     if (!filter) {
@@ -19,18 +22,23 @@ export function App() {
     );
   });
 
+  const createAnecdote = (content) => {
+    dispatch(addAnecdote({ content }));
+
+    dispatch(setNotification({ message: `added "${content}"` }));
+    setTimeout(() => dispatch(setNotification({ message: null })), 3500);
+  };
+
   return (
     <div>
       <h1>Anecdotes</h1>
-      <Notification />
+      {notification && <Notification message={notification} />}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <Filter onChange={(filter) => dispatch(setFilter({ filter }))} />
         <AnecdoteList anecdotes={anecdotes} />
       </div>
       <h2>New Anecdote</h2>
-      <AnecdoteForm
-        onSubmit={(content) => dispatch(addAnecdote({ content }))}
-      />
+      <AnecdoteForm onSubmit={createAnecdote} />
     </div>
   );
 }
