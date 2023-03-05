@@ -22,7 +22,7 @@ export function App() {
     <div>
       <h1>Anecdotes</h1>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <Filter onChange={(filter) => dispatch(setFilter(filter))} />
+        <Filter onChange={(filter) => dispatch(setFilter({ filter }))} />
         <AnecdoteList anecdotes={anecdotes} />
       </div>
       <h2>New Anecdote</h2>
