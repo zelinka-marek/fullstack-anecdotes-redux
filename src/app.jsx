@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnecdoteForm } from "./components/anecdote-form";
 import { AnecdoteList } from "./components/anecdote-list";
 import { Filter } from "./components/filter";
+import { Notification } from "./components/notification";
 import { addAnecdote } from "./reducers/anecdotes";
 import { setFilter } from "./reducers/filter";
 
@@ -21,6 +22,7 @@ export function App() {
   return (
     <div>
       <h1>Anecdotes</h1>
+      <Notification />
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <Filter onChange={(filter) => dispatch(setFilter({ filter }))} />
         <AnecdoteList anecdotes={anecdotes} />
