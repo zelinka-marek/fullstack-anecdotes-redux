@@ -1,26 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AnecdoteForm } from "./components/anecdote-form";
 import { AnecdoteList } from "./components/anecdote-list";
+import { Filter } from "./components/filter";
 import { createAnecdote } from "./reducers/anecdote";
+import { setFilter } from "./reducers/filter";
 
 export function App() {
   const dispatch = useDispatch();
-  const anecdotes = useSelector((state) => {
-    const byVotes = (a, b) => b.votes - a.votes;
+  const anecdotes = useSelector(({ anecdotes, filter }) => {
+    const sortedAnecdotes = anecdotes.sort((a, b) => b.votes - a.votes);
+    if (!filter) {
+      return sortedAnecdotes;
+    }
 
-    return state.sort(byVotes);
+    return sortedAnecdotes.filter((a) =>
+      a.content.toLowerCase().includes(filter.toLowerCase())
+    );
   });
-
-  const addAnecdote = (content) => {
-    dispatch(createAnecdote(content));
-  };
 
   return (
     <div>
       <h1>Anecdotes</h1>
-      <AnecdoteList anecdotes={anecdotes} />
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <Filter onChange={(filter) => dispatch(setFilter(filter))} />
+        <AnecdoteList anecdotes={anecdotes} />
+      </div>
       <h2>New Anecdote</h2>
-      <AnecdoteForm onSubmit={addAnecdote} />
+      <AnecdoteForm onSubmit={(content) => dispatch(createAnecdote(content))} />
     </div>
   );
 }
