@@ -1,14 +1,10 @@
 import { useDispatch } from "react-redux";
-import { addVote } from "../reducers/anecdote";
+import { voteForAnecdote } from "../reducers/anecdotes";
 
 export function AnecdoteList(props) {
   const { anecdotes } = props;
 
   const dispatch = useDispatch();
-
-  const vote = (id) => {
-    dispatch(addVote(id));
-  };
 
   return (
     <div>
@@ -17,7 +13,10 @@ export function AnecdoteList(props) {
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}{" "}
-            <button type="button" onClick={() => vote(anecdote.id)}>
+            <button
+              type="button"
+              onClick={() => dispatch(voteForAnecdote({ id: anecdote.id }))}
+            >
               vote
             </button>
           </div>
