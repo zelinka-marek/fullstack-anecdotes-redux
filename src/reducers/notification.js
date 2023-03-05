@@ -9,8 +9,12 @@ const notificationSlice = createSlice({
 
       return message;
     },
+    removeNotification(_state, _action) {
+      return null;
+    },
   },
 });
 
 export const { reducer: notificationReducer } = notificationSlice;
-export const { setNotification } = notificationSlice.actions;
+export const { setNotification, removeNotification } =
+  notificationSlice.actions;

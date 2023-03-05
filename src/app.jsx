@@ -5,7 +5,7 @@ import { Filter } from "./components/filter";
 import { Notification } from "./components/notification";
 import { addAnecdote } from "./reducers/anecdotes";
 import { setFilter } from "./reducers/filter";
-import { setNotification } from "./reducers/notification";
+import { removeNotification, setNotification } from "./reducers/notification";
 
 export function App() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export function App() {
     dispatch(addAnecdote({ content }));
 
     dispatch(setNotification({ message: `added "${content}"` }));
-    setTimeout(() => dispatch(setNotification({ message: null })), 3500);
+    setTimeout(() => dispatch(removeNotification()), 3500);
   };
 
   return (
