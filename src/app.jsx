@@ -1,15 +1,24 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnecdoteForm } from "./components/anecdote-form";
 import { AnecdoteList } from "./components/anecdote-list";
 import { Filter } from "./components/filter";
 import { Notification } from "./components/notification";
-import { addAnecdote } from "./reducers/anecdotes";
+import { addAnecdote, setAnecdotes } from "./reducers/anecdotes";
 import { setFilter } from "./reducers/filter";
 import { removeNotification, setNotification } from "./reducers/notification";
+import { getAnecdotes } from "./services/anecdotes";
 
 export function App() {
   const dispatch = useDispatch();
+
   const notification = useSelector(({ notification }) => notification);
+
+  useEffect(() => {
+    getAnecdotes().then((anecdotes) => {
+      dispatch(setAnecdotes(anecdotes));
+    });
+  }, [dispatch]);
 
   const anecdotes = useSelector(({ anecdotes, filter }) => {
     const sortedAnecdotes = [...anecdotes].sort((a, b) => b.votes - a.votes);
