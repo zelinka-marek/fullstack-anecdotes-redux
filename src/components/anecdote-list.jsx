@@ -1,18 +1,17 @@
 import { useDispatch } from "react-redux";
 import { voteForAnecdote } from "../reducers/anecdotes";
-import { removeNotification, setNotification } from "../reducers/notification";
 
 export function AnecdoteList(props) {
   const { anecdotes } = props;
 
   const dispatch = useDispatch();
 
-  const vote = (anecdote) => {
-    dispatch(voteForAnecdote({ id: anecdote.id }));
+  // const vote = (anecdote) => {
+  //   dispatch(voteForAnecdote({ id: anecdote.id }));
 
-    dispatch(setNotification({ message: `you voted "${anecdote.content}"` }));
-    setTimeout(() => dispatch(removeNotification()), 3500);
-  };
+  //   dispatch(setNotification({ message: `you voted "${anecdote.content}"` }));
+  //   setTimeout(() => dispatch(removeNotification()), 3500);
+  // };
 
   return (
     <div>
@@ -21,7 +20,10 @@ export function AnecdoteList(props) {
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}{" "}
-            <button type="button" onClick={() => vote(anecdote)}>
+            <button
+              type="button"
+              onClick={() => dispatch(voteForAnecdote(anecdote.id))}
+            >
               vote
             </button>
           </div>

@@ -13,3 +13,9 @@ export async function createAnecdote(data) {
 
   return response.data;
 }
+
+export async function updateAnecdote(id, data) {
+  const response = await axios.put(`${baseUrl}/${id}`, data);
+
+  return response.data;
+}
