@@ -7,7 +7,7 @@ import { Notification } from "./components/notification";
 import { addAnecdote, setAnecdotes } from "./reducers/anecdotes";
 import { setFilter } from "./reducers/filter";
 import { removeNotification, setNotification } from "./reducers/notification";
-import { getAnecdotes } from "./services/anecdotes";
+import { createAnecdote, getAnecdotes } from "./services/anecdotes";
 
 export function App() {
   const dispatch = useDispatch();
@@ -31,8 +31,9 @@ export function App() {
     );
   });
 
-  const createAnecdote = (content) => {
-    dispatch(addAnecdote({ content }));
+  const newAnecdote = async (content) => {
+    const anecdote = await createAnecdote({ content, votes: 0 });
+    dispatch(addAnecdote(anecdote));
 
     dispatch(setNotification({ message: `added "${content}"` }));
     setTimeout(() => dispatch(removeNotification()), 3500);
@@ -47,7 +48,7 @@ export function App() {
         <AnecdoteList anecdotes={anecdotes} />
       </div>
       <h2>New Anecdote</h2>
-      <AnecdoteForm onSubmit={createAnecdote} />
+      <AnecdoteForm onSubmit={newAnecdote} />
     </div>
   );
 }
