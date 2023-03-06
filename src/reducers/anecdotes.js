@@ -45,3 +45,11 @@ export function initializeAnecdotes() {
     dispatch(setAnecdotes(anecdotes));
   };
 }
+
+export function addAnecdote(content) {
+  return async (dispatch) => {
+    const anecdote = await createAnecdote({ content, votes: 0 });
+
+    dispatch(appendAnecdote(anecdote));
+  };
+}
