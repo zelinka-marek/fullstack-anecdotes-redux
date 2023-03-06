@@ -4,7 +4,11 @@ import { AnecdoteForm } from "./components/anecdote-form";
 import { AnecdoteList } from "./components/anecdote-list";
 import { Filter } from "./components/filter";
 import { Notification } from "./components/notification";
-import { addAnecdote, setAnecdotes } from "./reducers/anecdotes";
+import {
+  appendAnecdote,
+  initializeAnecdotes,
+  setAnecdotes,
+} from "./reducers/anecdotes";
 import { setFilter } from "./reducers/filter";
 import { removeNotification, setNotification } from "./reducers/notification";
 import { createAnecdote, getAnecdotes } from "./services/anecdotes";
@@ -15,9 +19,7 @@ export function App() {
   const notification = useSelector(({ notification }) => notification);
 
   useEffect(() => {
-    getAnecdotes().then((anecdotes) => {
-      dispatch(setAnecdotes(anecdotes));
-    });
+    dispatch(initializeAnecdotes());
   }, [dispatch]);
 
   const anecdotes = useSelector(({ anecdotes, filter }) => {
@@ -33,7 +35,7 @@ export function App() {
 
   const newAnecdote = async (content) => {
     const anecdote = await createAnecdote({ content, votes: 0 });
-    dispatch(addAnecdote(anecdote));
+    dispatch(appendAnecdote(anecdote));
 
     dispatch(setNotification({ message: `added "${content}"` }));
     setTimeout(() => dispatch(removeNotification()), 3500);
