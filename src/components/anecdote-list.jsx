@@ -6,13 +6,6 @@ export function AnecdoteList(props) {
 
   const dispatch = useDispatch();
 
-  // const vote = (anecdote) => {
-  //   dispatch(voteForAnecdote({ id: anecdote.id }));
-
-  //   dispatch(setNotification({ message: `you voted "${anecdote.content}"` }));
-  //   setTimeout(() => dispatch(removeNotification()), 3500);
-  // };
-
   return (
     <div>
       {anecdotes.map((anecdote) => (

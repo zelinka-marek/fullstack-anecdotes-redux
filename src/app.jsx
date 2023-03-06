@@ -27,14 +27,6 @@ export function App() {
     );
   });
 
-  // const newAnecdote = async (content) => {
-  //   const anecdote = await createAnecdote({ content, votes: 0 });
-  //   dispatch(appendAnecdote(anecdote));
-
-  //   dispatch(setNotification({ message: `added "${content}"` }));
-  //   setTimeout(() => dispatch(removeNotification()), 3500);
-  // };
-
   return (
     <div>
       <h1>Anecdotes</h1>

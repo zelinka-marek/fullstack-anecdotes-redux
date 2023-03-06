@@ -4,18 +4,7 @@ import {
   getAnecdotes,
   updateAnecdote,
 } from "../services/anecdotes";
-
-function generateId() {
-  return Number((Math.random() * 1_000_000).toFixed(0));
-}
-
-function toAnecdote(content) {
-  return {
-    id: generateId(),
-    content,
-    votes: 0,
-  };
-}
+import { notify } from "./notification";
 
 const anecdotesSlice = createSlice({
   name: "anecdotes",
@@ -56,6 +45,7 @@ export function addAnecdote(content) {
     const anecdote = await createAnecdote({ content, votes: 0 });
 
     dispatch(appendAnecdote(anecdote));
+    dispatch(notify(`added "${content}"`));
   };
 }
 
@@ -69,5 +59,6 @@ export function voteForAnecdote(id) {
     const updatedAnecdote = await updateAnecdote(id, anecdoteUpdates);
 
     dispatch(setAnecdote({ id, updatedAnecdote }));
+    dispatch(notify(`you voted "${anecdote.content}"`));
   };
 }
